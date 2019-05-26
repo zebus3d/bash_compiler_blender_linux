@@ -89,15 +89,15 @@ fi
 
 # compilando:
 echo "### compilando ###"
+
 if [ "$TARGETBRANCH" == "fluid-mantaflow" ]; then
     cd $MAINDIR/mantaflow
-    make
-    make install
 else
     cd $MAINDIR/blender-git/build
-    make
-    make install
 fi
+
+make
+make install
 
 
 
