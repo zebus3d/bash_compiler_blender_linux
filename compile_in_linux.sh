@@ -99,8 +99,7 @@ else
 fi
 
 # compilando:
-wd=$(pwd)
-echo -e "\n######### Compiling in $wd #########"
+echo -e "\n######### Compiling in $(pwd) #########"
 
 # echo -e "\n######### make deps #########"
 # cd $MAINDIR/blender-git/blender
@@ -119,8 +118,7 @@ make &&
 make install &&
 
 if [ -f "bin/blender" ]; then
-    wd=$(pwd)
-    echo -e "\n######### Opening Blender $wd #########"
+    echo -e "\n######### Opening Blender $(pwd) #########"
     ./bin/blender
 fi
 
