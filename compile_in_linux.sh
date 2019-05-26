@@ -68,21 +68,36 @@ read ask
 if [ "$ask" == "gui" ] || [ "ask" == "Gui" ] || [ "ask" == "GUI" ]; then
     # configurar con gui:
     echo "### configurando cmake con gui ###"
-    cd $MAINDIR/mantaflow
+    
+    if [ "$TARGETBRANCH" == "fluid-mantaflow" ]; then
+        cd $MAINDIR/mantaflow
+    else
+        cd $MAINDIR/2.80
+
     cmake-gui ../blender
 else
     # configurar sin gui:
     echo "### configurando cmake ###"
-    cd $MAINDIR/mantaflow
+    
+    if [ "$TARGETBRANCH" == "fluid-mantaflow" ]; then
+        cd $MAINDIR/mantaflow
+    else
+        cd $MAINDIR/2.80
+
     cmake ../blender -WITH_STATIC_LIBS=ON -DWITH_CXX11=ON -DGUI=OFF -DWITH_FFTW3=ON -DWITH_MOD_OCEANSIM=ON -DWITH_ALEMBIC=ON -DWITH_INSTALL_PORTABLE=ON -DWITH_BUILDINFO=ON
 fi
 
 # compilando:
 echo "### compilando ###"
-cd $MAINDIR/blender-git/build
-make
-make install
-
+if [ "$TARGETBRANCH" == "fluid-mantaflow" ]; then
+    cd $MAINDIR/mantaflow
+    make
+    make install
+else
+    cd $MAINDIR/blender-git/build
+    make
+    make install
+fi
 
 
 
