@@ -52,15 +52,15 @@ fi
 
 
 echo -e "\n######### Creating directories #########"
-if [ ! -d "$MAINDIR/blender-git/2.80" ]; then
-    mkdir $MAINDIR/blender-git/2.80
+if [ ! -d "$MAINDIR/blender-git/master" ]; then
+    mkdir $MAINDIR/blender-git/master
 else
-    echo "$MAINDIR/blender-git/2.80 it already exists, nothing is done"
+    echo "$MAINDIR/blender-git/master it already exists, nothing is done"
 fi
-if [ ! -d "$MAINDIR/blender-git/mantaflow" ]; then
-    mkdir $MAINDIR/blender-git/mantaflow
+if [ ! -d "$MAINDIR/blender-git/fluid-mantaflow" ]; then
+    mkdir $MAINDIR/blender-git/fluid-mantaflow
 else
-    echo "$MAINDIR/blender-git/mantaflow it already exists, nothing is done"
+    echo "$MAINDIR/blender-git/fluid-mantaflow it already exists, nothing is done"
 fi
 
 # actualizando el repo:
@@ -79,11 +79,11 @@ echo "Automatic cmake or gui? (Auto/gui)"
 read ask
 
 if [ "$TARGETBRANCH" == "fluid-mantaflow" ]; then
-    echo -e "\n######### entering into $MAINDIR/blender-git/mantaflow #########"
-    cd $MAINDIR/blender-git/mantaflow
+    echo -e "\n######### entering into $MAINDIR/blender-git/fluid-mantaflow #########"
+    cd $MAINDIR/blender-git/fluid-mantaflow
 else
-    echo -e "\n######### entering into $MAINDIR/blender-git/2.80 #########"
-    cd $MAINDIR/blender-git/2.80
+    echo -e "\n######### entering into $MAINDIR/blender-git/master #########"
+    cd $MAINDIR/blender-git/master
 fi
 
 if [ ! -z "$ask" ] || [ "$ask" == "gui" ] || [ "$ask" == "Gui" ] || [ "$ask" == "GUI" ]; then
@@ -108,11 +108,11 @@ echo -e "\n######### Compiling in $wd #########"
 # make deps 
 
 if [ "$TARGETBRANCH" == "fluid-mantaflow" ]; then
-    echo -e "\n######### entering into $MAINDIR/mantaflow #########"
-    cd $MAINDIR/blender-git/mantaflow
+    echo -e "\n######### entering into $MAINDIR/fluid-mantaflow #########"
+    cd $MAINDIR/blender-git/fluid-mantaflow
 else
-    echo -e "\n######### entering into $MAINDIR/2.80 #########"
-    cd $MAINDIR/blender-git/2.8
+    echo -e "\n######### entering into $MAINDIR/master #########"
+    cd $MAINDIR/blender-git/master
 fi
 
 make &&
