@@ -33,12 +33,12 @@ else
 fi
 
 # Dependencias basicas:
-echo '######### DEPENDENCIAS BASICAS #########'
+echo -e '\n ######### DEPENDENCIAS BASICAS #########'
 sudo apt install git build-essential cmake-gui
 
 # comprobando si existen los directorios
 # si no existen los creo:
-echo '######### Creando directorios #########'
+echo -e '\n ######### Creando directorios #########'
 if [ ! -d '$MAINDIR/blender-git' ]; then
     mkdir $MAINDIR/blender-git
 else
@@ -56,7 +56,7 @@ else
 fi
 
 
-echo '######### clonando blender #########'
+echo -e '\n ######### clonando blender #########'
 CHKVOIDDIR=$(find $MAINDIR/blender-git/blender -maxdepth 0 -empty -exec echo 'True' \;)
 if [ '$CHKVOIDDIR' == 'True' ]; then
     cd $MAINDIR/blender-git 
@@ -70,13 +70,13 @@ else
 fi
 
 # actualizando el repo:
-echo '######### actualizando el repo #########'
+echo -e '\n ######### actualizando el repo #########'
 cd $MAINDIR/blender-git/blender
 git checkout $TARGETBRANCH
 make update
 
 # dependencias de blender:
-echo '######### instalando dependecias #########'
+echo -e '\n ######### instalando dependecias #########'
 cd $MAINDIR/blender-git/
 ./blender/build_files/build_environment/install_deps.sh
 
@@ -85,7 +85,7 @@ echo 'cmake automatico o por gui? (Auto/gui)'
 read ask
 if [ ! -z '$ask' ] || [ '$ask' == 'gui' ] || [ '$ask' == 'Gui' ] || [ '$ask' == 'GUI' ]; then
     # configurar con gui:
-    echo '######### configurando cmake con gui #########'
+    echo -e '\n ######### configurando cmake con gui #########'
     
     if [ '$TARGETBRANCH' == 'fluid-mantaflow' ]; then
         cd $MAINDIR/mantaflow
@@ -95,20 +95,20 @@ if [ ! -z '$ask' ] || [ '$ask' == 'gui' ] || [ '$ask' == 'Gui' ] || [ '$ask' == 
     cmake-gui ../blender-git/blender
 else
     # configurar sin gui:
-    echo '######### configurando cmake #########'
+    echo -e '\n ######### configurando cmake #########'
     
     if [ '$TARGETBRANCH' == 'fluid-mantaflow' ]; then
-        echo '######### entrando en $MAINDIR/mantaflow #########'
+        echo -e '\n ######### entrando en $MAINDIR/mantaflow #########'
         cd $MAINDIR/mantaflow
     else
-        echo '######### entrando en $MAINDIR/2.80 #########'
+        echo -e '\n ######### entrando en $MAINDIR/2.80 #########'
         cd $MAINDIR/2.80
     fi
     cmake ../blender-git/blender -WITH_STATIC_LIBS=ON -DWITH_CXX11=ON -DGUI=OFF -DWITH_FFTW3=ON -DWITH_MOD_OCEANSIM=ON -DWITH_ALEMBIC=ON -DWITH_INSTALL_PORTABLE=ON -DWITH_BUILDINFO=ON
 fi
 
 # compilando:
-echo '######### compilando #########'
+echo -e '\n ######### compilando #########'
 
 if [ '$TARGETBRANCH' == 'fluid-mantaflow' ]; then
     cd $MAINDIR/mantaflow
@@ -119,7 +119,7 @@ fi
 make
 make install
 
-echo '######### abriendo blender #########'
+echo -e '\n ######### abriendo blender #########'
 ./bin/blender
 
 # para futuras veces:
