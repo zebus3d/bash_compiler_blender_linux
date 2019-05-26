@@ -5,6 +5,8 @@
 
 # el directorio donde trabajaremos:
 MAINDIR="$HOME/buildingBlender"
+# TARGETBRANCH="master"
+TARGETBRANCH="fluid-mantaflow"
 
 if [ ! -d "$MAINDIR" ]; then
     mkdir -p $MAINDIR
@@ -52,9 +54,7 @@ fi
 # actualizando el repo:
 echo "### actualizando el repo ###"
 cd $MAINDIR/blender-git/blender
-#make update
-# usaremos mantaflow:
-git checkout fluid-mantaflow
+git checkout $TARGETBRANCH
 make update
 
 # dependencias de blender:
@@ -88,9 +88,9 @@ make install
 
 # para futuras veces:
 #cd $MAINDIR/blender-git/blender
-#git checkout fluid-mantaflow
+#git checkout $TARGETBRANCH
 #git pull --rebase
-#git submodule foreach git pull --rebase origin fluid-mantaflow
+#git submodule foreach git pull --rebase origin $TARGETBRANCH
 #cd $MAINDIR/blender-git/build
 #make
 #make install
