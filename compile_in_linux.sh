@@ -23,8 +23,8 @@
 
 # work directory:
 MAINDIR="$HOME/buildingBlender"
-TARGETBRANCH="master"
-# TARGETBRANCH="fluid-mantaflow"
+# TARGETBRANCH="master"
+TARGETBRANCH="fluid-mantaflow"
 
 if [ ! -d "$MAINDIR" ]; then
     mkdir -p $MAINDIR
@@ -116,7 +116,7 @@ else
     cd $MAINDIR/2.8
 fi
 
-make
+make &&
 make install
 
 wd=$(pwd)
