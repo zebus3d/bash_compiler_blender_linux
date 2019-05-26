@@ -36,25 +36,6 @@ fi
 echo -e "\n######### Basic Dependencies #########"
 sudo apt install git build-essential cmake-gui
 
-# comprobando si existen los directorios
-# si no existen los creo:
-echo -e "\n######### Creating directories #########"
-if [ ! -d "$MAINDIR/blender-git" ]; then
-    mkdir $MAINDIR/blender-git
-else
-    echo "$MAINDIR/blender-git it already exists, nothing is done"
-fi
-if [ ! -d "$MAINDIR/2.80" ]; then
-    mkdir $MAINDIR/2.80
-else
-    echo "$MAINDIR/2.80 it already exists, nothing is done"
-fi
-if [ ! -d "$MAINDIR/mantaflow" ]; then
-    mkdir $MAINDIR/mantaflow
-else
-    echo "$MAINDIR/mantaflow it already exists, nothing is done"
-fi
-
 
 echo -e "\n######### Blender Cloning #########"
 CHKVOIDDIR=$(find $MAINDIR/blender-git/blender -maxdepth 0 -empty -exec echo "True" \;)
@@ -67,6 +48,20 @@ if [ "$CHKVOIDDIR" == "True" ]; then
     git submodule foreach git pull --rebase origin master
 else
     echo "$MAINDIR/blender-git It's already got stuff in it, it won't clone anything.."
+fi
+
+# comprobando si existen los directorios
+# si no existen los creo:
+echo -e "\n######### Creating directories #########"
+if [ ! -d "$MAINDIR/blender-git/2.80" ]; then
+    mkdir $MAINDIR/blender-git/2.80
+else
+    echo "$MAINDIR/blender-git/2.80 it already exists, nothing is done"
+fi
+if [ ! -d "$MAINDIR/blender-git/mantaflow" ]; then
+    mkdir $MAINDIR/blender-git/mantaflow
+else
+    echo "$MAINDIR/blender-git/mantaflow it already exists, nothing is done"
 fi
 
 # actualizando el repo:
@@ -86,22 +81,22 @@ read ask
 
 if [ "$TARGETBRANCH" == "fluid-mantaflow" ]; then
     echo -e "\n######### entering into $MAINDIR/mantaflow #########"
-    cd $MAINDIR/mantaflow
+    cd $MAINDIR/blender-git/mantaflow
 else
     echo -e "\n######### entering into $MAINDIR/2.80 #########"
-    cd $MAINDIR/2.80
+    cd $MAINDIR/blender-git/2.80
 fi
 
 if [ ! -z "$ask" ] || [ "$ask" == "gui" ] || [ "$ask" == "Gui" ] || [ "$ask" == "GUI" ]; then
     # configurar con gui:
     echo -e "\n######### Configuring cmake with gui #########"
-    cmake-gui ../blender-git/blender
+    cmake-gui ../blender
 else
     # configurar sin gui:
     echo -e "\n######### Configuring cmake #########"
-    cmake ../blender-git/blender -D WITH_CXX11=ON -D GUI=OFF -D WITH_FFTW3=ON -D WITH_MOD_OCEANSIM=ON -D WITH_ALEMBIC=ON
-    # cmake ../blender-git/blender -WITH_STATIC_LIBS=ON -DWITH_CXX11=ON -DGUI=OFF -DWITH_FFTW3=ON -DWITH_MOD_OCEANSIM=ON -DWITH_ALEMBIC=ON
-    # cmake ../blender-git/blender -WITH_STATIC_LIBS=ON -DWITH_CXX11=ON -DGUI=OFF -DWITH_FFTW3=ON -DWITH_MOD_OCEANSIM=ON -DWITH_ALEMBIC=ON -DWITH_INSTALL_PORTABLE=ON -DWITH_BUILDINFO=ON
+    cmake ../blender -D WITH_CXX11=ON -D GUI=OFF -D WITH_FFTW3=ON -D WITH_MOD_OCEANSIM=ON -D WITH_ALEMBIC=ON
+    # cmake ../blender -WITH_STATIC_LIBS=ON -DWITH_CXX11=ON -DGUI=OFF -DWITH_FFTW3=ON -DWITH_MOD_OCEANSIM=ON -DWITH_ALEMBIC=ON
+    # cmake ../blender -WITH_STATIC_LIBS=ON -DWITH_CXX11=ON -DGUI=OFF -DWITH_FFTW3=ON -DWITH_MOD_OCEANSIM=ON -DWITH_ALEMBIC=ON -DWITH_INSTALL_PORTABLE=ON -DWITH_BUILDINFO=ON
 fi
 
 # compilando:
@@ -115,10 +110,10 @@ echo -e "\n######### Compiling in $wd #########"
 
 if [ "$TARGETBRANCH" == "fluid-mantaflow" ]; then
     echo -e "\n######### entering into $MAINDIR/mantaflow #########"
-    cd $MAINDIR/mantaflow
+    cd $MAINDIR/blender-git/mantaflow
 else
     echo -e "\n######### entering into $MAINDIR/2.80 #########"
-    cd $MAINDIR/2.8
+    cd $MAINDIR/blender-git/2.8
 fi
 
 make &&
