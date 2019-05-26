@@ -17,11 +17,11 @@
 # ##### END GPL LICENSE BLOCK #####
 
 #############################################
-# Compilandor de blender 2.80 con mantaflow 
-# version 0.0 (probado en linux mint 19.1)
+# Compiler Blender 2.80 with/without mantaflow 
+# version 0.0 (tested in linux mint 19.1)
 #############################################
 
-# el directorio donde trabajaremos:
+# work directory:
 MAINDIR="$HOME/buildingBlender"
 # TARGETBRANCH="master"
 TARGETBRANCH="fluid-mantaflow"
