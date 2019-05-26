@@ -23,8 +23,8 @@
 
 # work directory:
 MAINDIR="$HOME/buildingBlender"
-# TARGETBRANCH="master"
-TARGETBRANCH="fluid-mantaflow"
+TARGETBRANCH="master"
+# TARGETBRANCH="fluid-mantaflow"
 
 if [ ! -d "$MAINDIR" ]; then
     mkdir -p $MAINDIR
@@ -83,43 +83,44 @@ cd $MAINDIR/blender-git/
 
 echo "Automatic cmake or gui? (Auto/gui)"
 read ask
+
+if [ "$TARGETBRANCH" == "fluid-mantaflow" ]; then
+    echo -e "\n######### entering into $MAINDIR/mantaflow #########"
+    cd $MAINDIR/mantaflow
+else
+    echo -e "\n######### entering into $MAINDIR/2.80 #########"
+    cd $MAINDIR/2.80
+fi
+
 if [ ! -z "$ask" ] || [ "$ask" == "gui" ] || [ "$ask" == "Gui" ] || [ "$ask" == "GUI" ]; then
     # configurar con gui:
     echo -e "\n######### Configuring cmake with gui #########"
-    
-    if [ "$TARGETBRANCH" == "fluid-mantaflow" ]; then
-        cd $MAINDIR/mantaflow
-    else
-        cd $MAINDIR/2.80
-    fi
     cmake-gui ../blender-git/blender
 else
     # configurar sin gui:
     echo -e "\n######### Configuring cmake #########"
-    
-    if [ "$TARGETBRANCH" == "fluid-mantaflow" ]; then
-        echo -e "\n######### entering into $MAINDIR/mantaflow #########"
-        cd $MAINDIR/mantaflow
-    else
-        echo -e "\n######### entering into $MAINDIR/2.80 #########"
-        cd $MAINDIR/2.80
-    fi
-    cmake ../blender-git/blender -WITH_STATIC_LIBS=ON -DWITH_CXX11=ON -DGUI=OFF -DWITH_FFTW3=ON -DWITH_MOD_OCEANSIM=ON -DWITH_ALEMBIC=ON -DWITH_INSTALL_PORTABLE=ON -DWITH_BUILDINFO=ON
+    cmake ../blender-git/blender -WITH_STATIC_LIBS=ON -DWITH_CXX11=ON -DGUI=OFF -DWITH_FFTW3=ON -DWITH_MOD_OCEANSIM=ON -DWITH_ALEMBIC=ON
+    # cmake ../blender-git/blender -WITH_STATIC_LIBS=ON -DWITH_CXX11=ON -DGUI=OFF -DWITH_FFTW3=ON -DWITH_MOD_OCEANSIM=ON -DWITH_ALEMBIC=ON -DWITH_INSTALL_PORTABLE=ON -DWITH_BUILDINFO=ON
 fi
 
 # compilando:
-echo -e "\n######### Compiling #########"
+wd=$(pwd)
+echo -e "\n######### Compiling in $wd #########"
+
 
 if [ "$TARGETBRANCH" == "fluid-mantaflow" ]; then
+    echo -e "\n######### entering into $MAINDIR/mantaflow #########"
     cd $MAINDIR/mantaflow
 else
+    echo -e "\n######### entering into $MAINDIR/2.80 #########"
     cd $MAINDIR/2.8
 fi
 
 make
 make install
 
-echo -e "\n######### Opening Blender #########"
+wd=$(pwd)
+echo -e "\n######### Opening Blender $wd #########"
 ./bin/blender
 
 # para futuras veces:
