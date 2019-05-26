@@ -99,7 +99,8 @@ if [ ! -z "$ask" ] || [ "$ask" == "gui" ] || [ "$ask" == "Gui" ] || [ "$ask" == 
 else
     # configurar sin gui:
     echo -e "\n######### Configuring cmake #########"
-    cmake ../blender-git/blender -WITH_STATIC_LIBS=ON -DWITH_CXX11=ON -DGUI=OFF -DWITH_FFTW3=ON -DWITH_MOD_OCEANSIM=ON -DWITH_ALEMBIC=ON
+    cmake ../blender-git/blender -D WITH_CXX11=ON -D GUI=OFF -D WITH_FFTW3=ON -D WITH_MOD_OCEANSIM=ON -D WITH_ALEMBIC=ON
+    # cmake ../blender-git/blender -WITH_STATIC_LIBS=ON -DWITH_CXX11=ON -DGUI=OFF -DWITH_FFTW3=ON -DWITH_MOD_OCEANSIM=ON -DWITH_ALEMBIC=ON
     # cmake ../blender-git/blender -WITH_STATIC_LIBS=ON -DWITH_CXX11=ON -DGUI=OFF -DWITH_FFTW3=ON -DWITH_MOD_OCEANSIM=ON -DWITH_ALEMBIC=ON -DWITH_INSTALL_PORTABLE=ON -DWITH_BUILDINFO=ON
 fi
 
@@ -107,6 +108,10 @@ fi
 wd=$(pwd)
 echo -e "\n######### Compiling in $wd #########"
 
+# echo -e "\n######### make deps #########"
+# cd $MAINDIR/blender-git/blender
+# make clean 
+# make deps 
 
 if [ "$TARGETBRANCH" == "fluid-mantaflow" ]; then
     echo -e "\n######### entering into $MAINDIR/mantaflow #########"
