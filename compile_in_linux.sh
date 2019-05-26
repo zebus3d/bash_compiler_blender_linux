@@ -6,6 +6,12 @@
 # el directorio donde trabajaremos:
 MAINDIR="/home/zebus3d/buildingBlender"
 
+if [ ! -d "$MAINDIR" ]; then
+    mkdir -p $MAINDIR
+else
+    echo "$MAINDIR ya existe no se creara"
+fi
+
 # Dependencias basicas:
 echo "### DEPENDENCIAS BASICAS ###"
 sudo apt install git build-essential cmake-gui
