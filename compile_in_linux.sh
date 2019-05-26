@@ -4,7 +4,7 @@
 #############################################
 
 # el directorio donde trabajaremos:
-MAINDIR="/home/zebus3d/buildingBlender"
+MAINDIR="$HOME/buildingBlender"
 
 if [ ! -d "$MAINDIR" ]; then
     mkdir -p $MAINDIR
