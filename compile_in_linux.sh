@@ -119,7 +119,8 @@ fi
 make
 make install
 
-
+echo '######### abriendo blender #########'
+./bin/blender
 
 # para futuras veces:
 #cd $MAINDIR/blender-git/blender
