@@ -18,7 +18,7 @@
 
 #############################################
 # Compiler Blender 2.80 with/without mantaflow 
-# version 0.0 (tested in linux mint 19.1)
+# version 0.1 (tested in linux mint 19.1)
 #############################################
 
 # work directory:
@@ -27,31 +27,30 @@ MAINDIR="$HOME/buildingBlender"
 TARGETBRANCH="fluid-mantaflow"
 
 if [ ! -d "$MAINDIR" ]; then
+    echo "creating the $MAINDIR directory"
     mkdir -p $MAINDIR
 else
     echo "$MAINDIR it already exists, nothing is done"
 fi
 
-# Dependencias basicas:
 echo -e "\n######### Basic Dependencies #########"
-sudo apt install git build-essential cmake-gui
-
+sudo apt install git build-essential cmake-qt-gui
 
 echo -e "\n######### Blender Cloning #########"
-CHKVOIDDIR=$(find $MAINDIR/blender-git/blender -maxdepth 0 -empty -exec echo "True" \;)
-if [ "$CHKVOIDDIR" == "True" ]; then
-    cd $MAINDIR/blender-git 
+if [ ! -d "$MAINDIR/blender-git" ]; then
+    cd $MAINDIR
+    mkdir blender-git
+    cd blender-git
     git clone https://git.blender.org/blender.git
     cd blender
     git submodule update --init --recursive
     git submodule foreach git checkout master
     git submodule foreach git pull --rebase origin master
 else
-    echo "$MAINDIR/blender-git It's already got stuff in it, it won't clone anything.."
+    echo "$MAINDIR/blender-git It is already cloned, nothing is done."
 fi
 
-# comprobando si existen los directorios
-# si no existen los creo:
+
 echo -e "\n######### Creating directories #########"
 if [ ! -d "$MAINDIR/blender-git/2.80" ]; then
     mkdir $MAINDIR/blender-git/2.80
@@ -80,10 +79,10 @@ echo "Automatic cmake or gui? (Auto/gui)"
 read ask
 
 if [ "$TARGETBRANCH" == "fluid-mantaflow" ]; then
-    echo -e "\n######### entering into $MAINDIR/mantaflow #########"
+    echo -e "\n######### entering into $MAINDIR/blender-git/mantaflow #########"
     cd $MAINDIR/blender-git/mantaflow
 else
-    echo -e "\n######### entering into $MAINDIR/2.80 #########"
+    echo -e "\n######### entering into $MAINDIR/blender-git/2.80 #########"
     cd $MAINDIR/blender-git/2.80
 fi
 
@@ -94,9 +93,9 @@ if [ ! -z "$ask" ] || [ "$ask" == "gui" ] || [ "$ask" == "Gui" ] || [ "$ask" == 
 else
     # configurar sin gui:
     echo -e "\n######### Configuring cmake #########"
-    cmake ../blender -D WITH_CXX11=ON -D GUI=OFF -D WITH_FFTW3=ON -D WITH_MOD_OCEANSIM=ON -D WITH_ALEMBIC=ON
-    # cmake ../blender -WITH_STATIC_LIBS=ON -DWITH_CXX11=ON -DGUI=OFF -DWITH_FFTW3=ON -DWITH_MOD_OCEANSIM=ON -DWITH_ALEMBIC=ON
-    # cmake ../blender -WITH_STATIC_LIBS=ON -DWITH_CXX11=ON -DGUI=OFF -DWITH_FFTW3=ON -DWITH_MOD_OCEANSIM=ON -DWITH_ALEMBIC=ON -DWITH_INSTALL_PORTABLE=ON -DWITH_BUILDINFO=ON
+    cmake -D WITH_CXX11=ON -D GUI=OFF -D WITH_FFTW3=ON -D WITH_MOD_OCEANSIM=ON -D WITH_ALEMBIC=ON ../blender 
+    # cmake -WITH_STATIC_LIBS=ON -D WITH_CXX11=ON -D GUI=OFF -D WITH_FFTW3=ON -D WITH_MOD_OCEANSIM=ON -D WITH_ALEMBIC=ON ../blender
+    # cmake -WITH_STATIC_LIBS=ON -D WITH_CXX11=ON -D GUI=OFF -D WITH_FFTW3=ON -D WITH_MOD_OCEANSIM=ON -D WITH_ALEMBIC=ON -DWITH_INSTALL_PORTABLE=ON -DWITH_BUILDINFO=ON ../blender 
 fi
 
 # compilando:
