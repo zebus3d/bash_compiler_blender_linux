@@ -1,6 +1,6 @@
 #############################################
 # Compilandor de blender 2.80 con mantaflow 
-# version 0.0
+# version 0.0 (probado en linux mint 19.1)
 #############################################
 
 # el directorio donde trabajaremos:
