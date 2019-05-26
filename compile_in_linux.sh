@@ -29,34 +29,34 @@ TARGETBRANCH="fluid-mantaflow"
 if [ ! -d "$MAINDIR" ]; then
     mkdir -p $MAINDIR
 else
-    echo "$MAINDIR ya existe no se hace nada"
+    echo "$MAINDIR it already exists, nothing is done"
 fi
 
 # Dependencias basicas:
-echo -e "\n######### DEPENDENCIAS BASICAS #########"
+echo -e "\n######### Basic Dependencies #########"
 sudo apt install git build-essential cmake-gui
 
 # comprobando si existen los directorios
 # si no existen los creo:
-echo -e "\n######### Creando directorios #########"
+echo -e "\n######### Creating directories #########"
 if [ ! -d "$MAINDIR/blender-git" ]; then
     mkdir $MAINDIR/blender-git
 else
-    echo "$MAINDIR/blender-git ya existe no se hace nada"
+    echo "$MAINDIR/blender-git it already exists, nothing is done"
 fi
 if [ ! -d "$MAINDIR/2.80" ]; then
     mkdir $MAINDIR/2.80
 else
-    echo "$MAINDIR/2.80 ya existe no se hace nada"
+    echo "$MAINDIR/2.80 it already exists, nothing is done"
 fi
 if [ ! -d "$MAINDIR/mantaflow" ]; then
     mkdir $MAINDIR/mantaflow
 else
-    echo "$MAINDIR/mantaflow ya existe no se hace nada"
+    echo "$MAINDIR/mantaflow it already exists, nothing is done"
 fi
 
 
-echo -e "\n######### clonando blender #########"
+echo -e "\n######### Blender Cloning #########"
 CHKVOIDDIR=$(find $MAINDIR/blender-git/blender -maxdepth 0 -empty -exec echo "True" \;)
 if [ "$CHKVOIDDIR" == "True" ]; then
     cd $MAINDIR/blender-git 
@@ -66,26 +66,26 @@ if [ "$CHKVOIDDIR" == "True" ]; then
     git submodule foreach git checkout master
     git submodule foreach git pull --rebase origin master
 else
-    echo "$MAINDIR/blender-git ya tiene cosas dentro, no se clonara nada."
+    echo "$MAINDIR/blender-git It's already got stuff in it, it won't clone anything.."
 fi
 
 # actualizando el repo:
-echo -e "\n######### actualizando el repo #########"
+echo -e "\n######### Updating The Repo #########"
 cd $MAINDIR/blender-git/blender
 git checkout $TARGETBRANCH
 make update
 
 # dependencias de blender:
-echo -e "\n######### instalando dependecias #########"
+echo -e "\n######### Installing Dependencies #########"
 cd $MAINDIR/blender-git/
 ./blender/build_files/build_environment/install_deps.sh
 
 
-echo "cmake automatico o por gui? (Auto/gui)"
+echo "Automatic cmake or gui? (Auto/gui)"
 read ask
 if [ ! -z "$ask" ] || [ "$ask" == "gui" ] || [ "$ask" == "Gui" ] || [ "$ask" == "GUI" ]; then
     # configurar con gui:
-    echo -e "\n######### configurando cmake con gui #########"
+    echo -e "\n######### Configuring cmake with gui #########"
     
     if [ "$TARGETBRANCH" == "fluid-mantaflow" ]; then
         cd $MAINDIR/mantaflow
@@ -95,20 +95,20 @@ if [ ! -z "$ask" ] || [ "$ask" == "gui" ] || [ "$ask" == "Gui" ] || [ "$ask" == 
     cmake-gui ../blender-git/blender
 else
     # configurar sin gui:
-    echo -e "\n######### configurando cmake #########"
+    echo -e "\n######### Configuring cmake #########"
     
     if [ "$TARGETBRANCH" == "fluid-mantaflow" ]; then
-        echo -e "\n######### entrando en $MAINDIR/mantaflow #########"
+        echo -e "\n######### entering into $MAINDIR/mantaflow #########"
         cd $MAINDIR/mantaflow
     else
-        echo -e "\n######### entrando en $MAINDIR/2.80 #########"
+        echo -e "\n######### entering into $MAINDIR/2.80 #########"
         cd $MAINDIR/2.80
     fi
     cmake ../blender-git/blender -WITH_STATIC_LIBS=ON -DWITH_CXX11=ON -DGUI=OFF -DWITH_FFTW3=ON -DWITH_MOD_OCEANSIM=ON -DWITH_ALEMBIC=ON -DWITH_INSTALL_PORTABLE=ON -DWITH_BUILDINFO=ON
 fi
 
 # compilando:
-echo -e "\n######### compilando #########"
+echo -e "\n######### Compiling #########"
 
 if [ "$TARGETBRANCH" == "fluid-mantaflow" ]; then
     cd $MAINDIR/mantaflow
@@ -119,7 +119,7 @@ fi
 make
 make install
 
-echo -e "\n######### abriendo blender #########"
+echo -e "\n######### Opening Blender #########"
 ./bin/blender
 
 # para futuras veces:
