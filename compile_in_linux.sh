@@ -113,7 +113,7 @@ echo "######### compilando #########"
 if [ "$TARGETBRANCH" == "fluid-mantaflow" ]; then
     cd $MAINDIR/mantaflow
 else
-    cd $MAINDIR/blender-git/build
+    cd $MAINDIR/blender-git/2.8
 fi
 
 make
