@@ -75,7 +75,7 @@ cd $MAINDIR/blender-git/
 ./blender/build_files/build_environment/install_deps.sh
 
 
-echo "Automatic cmake or gui? (Auto/gui)"
+echo -e "\nAutomatic cmake or gui? (Auto/gui)"
 read ask
 
 if [ "$TARGETBRANCH" == "fluid-mantaflow" ]; then
