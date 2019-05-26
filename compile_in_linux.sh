@@ -63,9 +63,9 @@ cd $MAINDIR/blender-git/
 ./blender/build_files/build_environment/install_deps.sh
 
 
-echo "cmake automatico o por gui?"
+echo "cmake automatico o por gui? (auto/Gui)"
 read ask
-if [[ "$ask" == "gui" ]]; then
+if [ "$ask" == "gui" ] || [ "ask" == "Gui" ] || [ "ask" == "GUI" ]; then
     # configurar con gui:
     echo "### configurando cmake con gui ###"
     cd $MAINDIR/mantaflow
