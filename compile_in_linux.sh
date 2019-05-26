@@ -83,7 +83,7 @@ cd $MAINDIR/blender-git/
 
 echo "cmake automatico o por gui? (auto/Gui)"
 read ask
-if [ "$ask" == "gui" ] || [ "ask" == "Gui" ] || [ "ask" == "GUI" ]; then
+if [ -z "$ask" ] || [ "$ask" == "gui" ] || [ "$ask" == "Gui" ] || [ "$ask" == "GUI" ]; then
     # configurar con gui:
     echo "### configurando cmake con gui ###"
     
