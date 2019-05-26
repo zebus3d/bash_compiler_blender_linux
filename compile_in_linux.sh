@@ -117,11 +117,13 @@ else
 fi
 
 make &&
-make install
+make install &&
 
-wd=$(pwd)
-echo -e "\n######### Opening Blender $wd #########"
-./bin/blender
+if [ -f "bin/blender" ]; then
+    wd=$(pwd)
+    echo -e "\n######### Opening Blender $wd #########"
+    ./bin/blender
+fi
 
 # para futuras veces:
 #cd $MAINDIR/blender-git/blender
