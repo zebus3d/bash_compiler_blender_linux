@@ -23,17 +23,22 @@
 
 # work directory:
 MAINDIR="$HOME/buildingBlender"
+
+################################################
+# choose your target branch here at the moment.
+################################################
 # TARGETBRANCH="master"
 TARGETBRANCH="fluid-mantaflow"
 # TARGETBRANCH="fracture_modifier"
 # TARGETBRANCH="fracture_modifier-master"
 
-# core detections:
+# Core detection:
 # cores=$(nproc --all)
 # cores=$(grep -c ^processor /proc/cpuinfo)
 # cores minus 1:
 cores=$(($(nproc --all)-1))
 echo "Cores detected minus 1: $cores"
+
 
 if [ ! -d "$MAINDIR" ]; then
     echo "creating the $MAINDIR directory"
