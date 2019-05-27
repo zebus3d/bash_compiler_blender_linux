@@ -76,6 +76,11 @@ if [ ! -d "$MAINDIR/blender-git/fluid-mantaflow" ]; then
 else
     echo "$MAINDIR/blender-git/fluid-mantaflow it already exists, nothing is done"
 fi
+if [ ! -d "$MAINDIR/blender-git/fracture_modifier" ]; then
+    mkdir $MAINDIR/blender-git/fracture_modifier
+else
+    echo "$MAINDIR/blender-git/fracture_modifier it already exists, nothing is done"
+fi
 
 # actualizando el repo:
 echo -e "\n######### Updating The Repo #########"
@@ -104,12 +109,17 @@ make deps -j$cores
 echo -e "\nAutomatic cmake or gui? (Auto/gui)"
 read ask
 
+if [ "$TARGETBRANCH" == "master" ]; then
+    echo -e "\n######### entering into $MAINDIR/blender-git/master #########"
+    cd $MAINDIR/blender-git/master
+fi
 if [ "$TARGETBRANCH" == "fluid-mantaflow" ]; then
     echo -e "\n######### entering into $MAINDIR/blender-git/fluid-mantaflow #########"
     cd $MAINDIR/blender-git/fluid-mantaflow
-else
-    echo -e "\n######### entering into $MAINDIR/blender-git/master #########"
-    cd $MAINDIR/blender-git/master
+fi
+if [ "$TARGETBRANCH" == "fracture_modifier" ]; then
+    echo -e "\n######### entering into $MAINDIR/blender-git/fracture_modifier #########"
+    cd $MAINDIR/blender-git/fracture_modifier
 fi
 
 if [ ! -z "$ask" ] || [ "$ask" == "gui" ] || [ "$ask" == "Gui" ] || [ "$ask" == "GUI" ]; then
@@ -124,13 +134,19 @@ fi
 
 echo -e "\n######### Compiling in $(pwd) #########"
 
-if [ "$TARGETBRANCH" == "fluid-mantaflow" ]; then
-    echo -e "\n######### entering into $MAINDIR/fluid-mantaflow #########"
-    cd $MAINDIR/blender-git/fluid-mantaflow
-else
+if [ "$TARGETBRANCH" == "master" ]; then
     echo -e "\n######### entering into $MAINDIR/master #########"
     cd $MAINDIR/blender-git/master
 fi
+if [ "$TARGETBRANCH" == "fluid-mantaflow" ]; then
+    echo -e "\n######### entering into $MAINDIR/fluid-mantaflow #########"
+    cd $MAINDIR/blender-git/fluid-mantaflow
+fi
+if [ "$TARGETBRANCH" == "fracture_modifier" ]; then
+    echo -e "\n######### entering into $MAINDIR/fracture_modifier #########"
+    cd $MAINDIR/blender-git/fracture_modifier
+fi
+
 
 make -j$cores &&
 make install -j$cores &&
