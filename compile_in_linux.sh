@@ -114,8 +114,8 @@ else
     cd $MAINDIR/blender-git/master
 fi
 
-make &&
-make install &&
+make -j3 &&
+make install -j3 &&
 
 if [ -f "bin/blender" ]; then
     echo -e "\n######### Opening Blender $(pwd) #########"
