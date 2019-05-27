@@ -28,6 +28,13 @@ TARGETBRANCH="fluid-mantaflow"
 # TARGETBRANCH="fracture_modifier"
 # TARGETBRANCH="fracture_modifier-master"
 
+# core detections:
+# cores=$(nproc --all)
+# cores=$(grep -c ^processor /proc/cpuinfo)
+# cores minus 1:
+cores=$(($(nproc --all)-1))
+echo "Cores detected minus 1: $cores"
+
 if [ ! -d "$MAINDIR" ]; then
     echo "creating the $MAINDIR directory"
     mkdir -p $MAINDIR
@@ -85,8 +92,8 @@ make update
 
 echo -e "\n######### make deps #########"
 cd $MAINDIR/blender-git/blender
-make clean 
-make deps 
+# make clean 
+make deps -j$cores
 
 
 echo -e "\nAutomatic cmake or gui? (Auto/gui)"
@@ -106,8 +113,8 @@ if [ ! -z "$ask" ] || [ "$ask" == "gui" ] || [ "$ask" == "Gui" ] || [ "$ask" == 
 else
     echo -e "\n######### Configuring cmake #########"
     # cmake -D WITH_CXX11=ON -D GUI=OFF -D WITH_FFTW3=ON -D WITH_MOD_OCEANSIM=ON -D WITH_ALEMBIC=ON ../blender 
-    # cmake -WITH_STATIC_LIBS=ON -D WITH_CXX11=ON -D GUI=OFF -D WITH_FFTW3=ON -D WITH_MOD_OCEANSIM=ON -D WITH_ALEMBIC=ON ../blender
-    cmake -WITH_STATIC_LIBS=ON -D WITH_CXX11=ON -D GUI=OFF -D WITH_FFTW3=ON -D WITH_MOD_OCEANSIM=ON -D WITH_ALEMBIC=ON -D WITH_INSTALL_PORTABLE=ON -D WITH_BUILDINFO=ON ../blender 
+    cmake -WITH_STATIC_LIBS=ON -D WITH_CXX11=ON -D GUI=OFF -D WITH_FFTW3=ON -D WITH_MOD_OCEANSIM=ON -D WITH_ALEMBIC=ON ../blender
+    # cmake -WITH_STATIC_LIBS=ON -D WITH_CXX11=ON -D GUI=OFF -D WITH_FFTW3=ON -D WITH_MOD_OCEANSIM=ON -D WITH_ALEMBIC=ON -D WITH_INSTALL_PORTABLE=ON -D WITH_BUILDINFO=ON ../blender 
 fi
 
 echo -e "\n######### Compiling in $(pwd) #########"
@@ -120,8 +127,8 @@ else
     cd $MAINDIR/blender-git/master
 fi
 
-make -j3 &&
-make install -j3 &&
+make -j$cores &&
+make install -j$cores &&
 
 if [ -f "bin/blender" ]; then
     echo -e "\n######### Opening Blender $(pwd) #########"
