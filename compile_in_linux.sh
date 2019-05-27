@@ -25,6 +25,8 @@
 MAINDIR="$HOME/buildingBlender"
 # TARGETBRANCH="master"
 TARGETBRANCH="fluid-mantaflow"
+# TARGETBRANCH="fracture_modifier"
+# TARGETBRANCH="fracture_modifier-master"
 
 if [ ! -d "$MAINDIR" ]; then
     echo "creating the $MAINDIR directory"
@@ -69,10 +71,22 @@ cd $MAINDIR/blender-git/blender
 git checkout $TARGETBRANCH
 make update
 
-# dependencias de blender:
-echo -e "\n######### Installing Dependencies #########"
-cd $MAINDIR/blender-git/
-./blender/build_files/build_environment/install_deps.sh
+#echo -e "\n######### Installing Dependencies #########"
+
+# Scorpion81 say: 
+# install_deps.sp install a mashup of distro libs and selfcompiled ones... usually dynamically linked.
+# make deps might be a better option for linux, in case you wanna have static libs and a shareable build... 
+# given your libc is not too new for the target system (e.g 
+# ubuntu 18.04 / mint 19.1 has glibc 2.27, wont likely run on systems with older glibc )
+
+#cd $MAINDIR/blender-git/
+#./blender/build_files/build_environment/install_deps.sh
+
+
+echo -e "\n######### make deps #########"
+cd $MAINDIR/blender-git/blender
+make clean 
+make deps 
 
 
 echo -e "\nAutomatic cmake or gui? (Auto/gui)"
@@ -87,24 +101,16 @@ else
 fi
 
 if [ ! -z "$ask" ] || [ "$ask" == "gui" ] || [ "$ask" == "Gui" ] || [ "$ask" == "GUI" ]; then
-    # configurar con gui:
     echo -e "\n######### Configuring cmake with gui #########"
     cmake-gui ../blender
 else
-    # configurar sin gui:
     echo -e "\n######### Configuring cmake #########"
     # cmake -D WITH_CXX11=ON -D GUI=OFF -D WITH_FFTW3=ON -D WITH_MOD_OCEANSIM=ON -D WITH_ALEMBIC=ON ../blender 
     # cmake -WITH_STATIC_LIBS=ON -D WITH_CXX11=ON -D GUI=OFF -D WITH_FFTW3=ON -D WITH_MOD_OCEANSIM=ON -D WITH_ALEMBIC=ON ../blender
     cmake -WITH_STATIC_LIBS=ON -D WITH_CXX11=ON -D GUI=OFF -D WITH_FFTW3=ON -D WITH_MOD_OCEANSIM=ON -D WITH_ALEMBIC=ON -D WITH_INSTALL_PORTABLE=ON -D WITH_BUILDINFO=ON ../blender 
 fi
 
-# compilando:
 echo -e "\n######### Compiling in $(pwd) #########"
-
-# echo -e "\n######### make deps #########"
-# cd $MAINDIR/blender-git/blender
-# make clean 
-# make deps 
 
 if [ "$TARGETBRANCH" == "fluid-mantaflow" ]; then
     echo -e "\n######### entering into $MAINDIR/fluid-mantaflow #########"
