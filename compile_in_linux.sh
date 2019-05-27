@@ -32,7 +32,6 @@ MAINDIR="$HOME/buildingBlender"
 # TARGETBRANCH="master"
 TARGETBRANCH="fluid-mantaflow"
 # TARGETBRANCH="fracture_modifier"
-# TARGETBRANCH="fracture_modifier-master"
 
 # Core detection:
 # cores=$(nproc --all)
