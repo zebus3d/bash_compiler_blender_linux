@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # ##### BEGIN GPL LICENSE BLOCK #####
 #
 #  This program is free software; you can redistribute it and/or
@@ -82,14 +84,12 @@ else
     echo "$MAINDIR/blender-git/fracture_modifier it already exists, nothing is done"
 fi
 
-# actualizando el repo:
 echo -e "\n######### Updating The Repo #########"
 cd $MAINDIR/blender-git/blender
 git checkout $TARGETBRANCH
 make update
 
-#echo -e "\n######### Installing Dependencies #########"
-
+echo -e "\n######### Installing Dependencies #########"
 # Scorpion81 say: 
 # install_deps.sp install a mashup of distro libs and selfcompiled ones... usually dynamically linked.
 # make deps might be a better option for linux, in case you wanna have static libs and a shareable build... 
@@ -99,8 +99,7 @@ make update
 #cd $MAINDIR/blender-git/
 #./blender/build_files/build_environment/install_deps.sh
 
-
-echo -e "\n######### make deps #########"
+echo -e "######### with make deps #########"
 cd $MAINDIR/blender-git/blender
 # make clean 
 make deps -j$cores
