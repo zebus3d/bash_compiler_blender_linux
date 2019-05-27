@@ -18,10 +18,10 @@
 #
 # ##### END GPL LICENSE BLOCK #####
 
-#############################################
-# Compiler Blender 2.80 with/without mantaflow 
-# version 0.1 (tested in linux mint 19.1)
-#############################################
+#################################################################
+# Compiler Blender 2.80 master or mantaflow or fracture modifier 
+# version 0.2 (tested in linux mint 19.1)
+#################################################################
 
 # work directory:
 MAINDIR="$HOME/buildingBlender"
